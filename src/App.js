@@ -2,12 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Enter from "./routes/Enter";
 import Home from "./routes/Home";
+import About from "./routes/About";
+import Mbti from "./routes/Mbti";
+import Fortune from "./routes/Fortune";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [userName, setUserName] = useState("");
   const [userMbti, setUserMbti] = useState("");
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -18,6 +23,18 @@ function App() {
         <Route
           path="/home"
           element={<Home userName={userName} userMbti={userMbti} />}
+        ></Route>
+        <Route
+          path="/mbti"
+          element={<Mbti userName={userName} userMbti={userMbti} />}
+        ></Route>
+        <Route
+          path="/fortune"
+          element={<Fortune userName={userName} userMbti={userMbti} />}
+        ></Route>
+        <Route
+          path="/about"
+          element={<About userName={userName} userMbti={userMbti} />}
         ></Route>
       </Routes>
     </Router>

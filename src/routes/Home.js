@@ -13,11 +13,8 @@ function Home({ userName, userMbti }) {
       sessionStorage.setItem("mbti", mbti);
     }
   }, []);
-  return (
-    <div>
-      {name} : {mbti}
-    </div>
-  );
+
+  return <div>하이</div>;
 }
 
 export default Home;
