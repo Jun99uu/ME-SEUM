@@ -5,7 +5,7 @@ import Enter from "./routes/Enter";
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Mbti from "./routes/Mbti";
-import Fortune from "./routes/Fortune";
+import Fun from "./routes/Fun";
 import Navbar from "./components/Navbar";
 import Admin from "./routes/Admin";
 
@@ -31,8 +31,8 @@ function App() {
           element={<Mbti userName={userName} userMbti={userMbti} />}
         ></Route>
         <Route
-          path="/fortune"
-          element={<Fortune userName={userName} userMbti={userMbti} />}
+          path="/fun"
+          element={<Fun userName={userName} userMbti={userMbti} />}
         ></Route>
         <Route
           path="/about"

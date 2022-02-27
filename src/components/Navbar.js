@@ -12,10 +12,10 @@ function Navbar() {
           <Link to="/home">ME-SEUM</Link>
         </li>
         <li>
-          <Link to="/MBTI">MBTI</Link>
+          <Link to="/fun">Fun</Link>
         </li>
         <li>
-          <Link to="/fortune">Today's Fortune</Link>
+          <Link to="/MBTI">MBTI</Link>
         </li>
         <li>
           <Link to="/about">About</Link>
