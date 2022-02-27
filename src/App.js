@@ -1,3 +1,4 @@
+import app from "./firebase";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Enter from "./routes/Enter";
@@ -6,6 +7,7 @@ import About from "./routes/About";
 import Mbti from "./routes/Mbti";
 import Fortune from "./routes/Fortune";
 import Navbar from "./components/Navbar";
+import Admin from "./routes/Admin";
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -36,6 +38,7 @@ function App() {
           path="/about"
           element={<About userName={userName} userMbti={userMbti} />}
         ></Route>
+        <Route path="/admin" element={<Admin />}></Route>
       </Routes>
     </Router>
   );

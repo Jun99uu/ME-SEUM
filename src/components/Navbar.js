@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  console.log(location.pathname);
   if (location.pathname === "/") {
     return null;
   }
@@ -20,6 +19,9 @@ function Navbar() {
         </li>
         <li>
           <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/admin">Admin</Link>
         </li>
       </ul>
     </div>
