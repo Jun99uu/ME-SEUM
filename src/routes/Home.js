@@ -34,7 +34,6 @@ function Home({ userName, userMbti }) {
     setCard([]);
     const docRef = doc(db, "artworks", "documents");
     const docSnap = await getDoc(docRef);
-    const storage = getStorage();
     if (docSnap.exists()) {
       const objs = docSnap._document.data.value.mapValue.fields;
       for (let key in objs) {
@@ -63,8 +62,6 @@ function Home({ userName, userMbti }) {
       }
     }
   }, []);
-
-  console.log(images);
   return (
     <div>
       {images.map((image) => (

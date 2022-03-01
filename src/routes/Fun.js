@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const storage = getStorage();
 const db = getFirestore();
@@ -13,8 +13,11 @@ function Fun() {
       explain: "",
     },
   ]);
+  const [images, setImg] = useState([""]);
+
   //배너 받아오기
   useEffect(async () => {
+    setImg([]);
     const docRef = doc(db, "banners", "documents");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -29,11 +32,31 @@ function Fun() {
             explain: objs[key].arrayValue.values[3].stringValue,
           },
         ]);
+        getDownloadURL(ref(storage, objs[key].arrayValue.values[0].stringValue))
+          .then((url) => {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = "blob";
+            xhr.onload = (event) => {
+              const blob = xhr.response;
+            };
+            xhr.open("GET", url);
+            xhr.send();
+            setImg((prevState) => [...prevState, url]);
+          })
+          .catch((error) => {
+            // Handle any errors
+          });
       }
     }
   }, []);
-  console.log(banner);
-  return <div>운세</div>;
+
+  return (
+    <div>
+      {images.map((image) => (
+        <img src={image} />
+      ))}
+    </div>
+  );
 }
 
 export default Fun;
