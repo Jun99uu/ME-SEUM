@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Contents from "../components/Contents";
+import styles from "./Home.module.css";
 
 const storage = getStorage();
 const db = getFirestore();

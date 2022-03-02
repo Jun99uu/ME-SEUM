@@ -1,0 +1,9 @@
+:modal {
+  display: none;
+}
+
+.openModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

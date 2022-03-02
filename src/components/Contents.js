@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import styles from "./Contents.module.css";
 
 function Contents({ open, close, image, date, content }) {
   return (
-    <div>
+    <div className={open === date ? styles.openModal : styles.modal}>
       {open === date ? (
         <section>
           <header>👩‍🚀중규리 님의 ArtWorks👩‍🚀</header>
