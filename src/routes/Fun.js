@@ -1,37 +1,29 @@
 import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import Banners from "../components/Banners";
 
 const storage = getStorage();
 const db = getFirestore();
 function Fun() {
   const [banner, setBanner] = useState([
     {
-      url: "",
       date: "",
       link: "",
       explain: "",
+      image: "",
     },
   ]);
-  const [images, setImg] = useState([""]);
+  const [modal, setModal] = useState("");
 
   //배너 받아오기
   useEffect(async () => {
-    setImg([]);
+    setBanner([]);
     const docRef = doc(db, "banners", "documents");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const objs = docSnap._document.data.value.mapValue.fields;
       for (let key in objs) {
-        setBanner((prevState) => [
-          ...prevState,
-          {
-            url: objs[key].arrayValue.values[0].stringValue,
-            date: objs[key].arrayValue.values[1].stringValue,
-            link: objs[key].arrayValue.values[2].stringValue,
-            explain: objs[key].arrayValue.values[3].stringValue,
-          },
-        ]);
         getDownloadURL(ref(storage, objs[key].arrayValue.values[0].stringValue))
           .then((url) => {
             const xhr = new XMLHttpRequest();
@@ -41,7 +33,15 @@ function Fun() {
             };
             xhr.open("GET", url);
             xhr.send();
-            setImg((prevState) => [...prevState, url]);
+            setBanner((prevState) => [
+              ...prevState,
+              {
+                date: objs[key].arrayValue.values[1].stringValue,
+                link: objs[key].arrayValue.values[2].stringValue,
+                explain: objs[key].arrayValue.values[3].stringValue,
+                image: url,
+              },
+            ]);
           })
           .catch((error) => {
             // Handle any errors
@@ -50,10 +50,25 @@ function Fun() {
     }
   }, []);
 
+  const modalChange = (infor) => {
+    setModal(infor);
+  };
+
   return (
     <div>
-      {images.map((image) => (
-        <img src={image} />
+      {banner.map((banner) => (
+        <div>
+          <img src={banner.image} />
+          <button onClick={() => modalChange(banner.date)}>열기</button>
+          <Banners
+            open={modal}
+            close={modalChange}
+            image={banner.image}
+            date={banner.date}
+            explain={banner.explain}
+            link={banner.link}
+          />
+        </div>
       ))}
     </div>
   );

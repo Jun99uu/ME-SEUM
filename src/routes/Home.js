@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import Contents from "../components/Contents";
 
 const storage = getStorage();
 const db = getFirestore();
@@ -8,15 +9,15 @@ function Home({ userName, userMbti }) {
   const [name, setName] = useState(userName);
   const [mbti, setMbti] = useState(userMbti);
 
+  const [modal, setModal] = useState("");
+
   const [card, setCard] = useState([
     {
-      url: "",
       date: "",
       content: "",
+      image: "",
     },
   ]);
-
-  const [images, setImg] = useState([""]);
 
   useEffect(() => {
     if (name === "" && mbti === "") {
@@ -30,21 +31,12 @@ function Home({ userName, userMbti }) {
 
   // 그림 받아오기
   useEffect(async () => {
-    setImg([]);
     setCard([]);
     const docRef = doc(db, "artworks", "documents");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const objs = docSnap._document.data.value.mapValue.fields;
       for (let key in objs) {
-        setCard((prevState) => [
-          ...prevState,
-          {
-            url: objs[key].arrayValue.values[0].stringValue,
-            date: objs[key].arrayValue.values[1].stringValue,
-            content: objs[key].arrayValue.values[2].stringValue,
-          },
-        ]);
         getDownloadURL(ref(storage, objs[key].arrayValue.values[0].stringValue))
           .then((url) => {
             const xhr = new XMLHttpRequest();
@@ -54,7 +46,14 @@ function Home({ userName, userMbti }) {
             };
             xhr.open("GET", url);
             xhr.send();
-            setImg((prevState) => [...prevState, url]);
+            setCard((prevState) => [
+              ...prevState,
+              {
+                date: objs[key].arrayValue.values[1].stringValue,
+                content: objs[key].arrayValue.values[2].stringValue,
+                image: url,
+              },
+            ]);
           })
           .catch((error) => {
             // Handle any errors
@@ -62,10 +61,25 @@ function Home({ userName, userMbti }) {
       }
     }
   }, []);
+
+  const modalChange = (infor) => {
+    setModal(infor);
+  };
+
   return (
     <div>
-      {images.map((image) => (
-        <img src={image} />
+      {card.map((card) => (
+        <div>
+          <img src={card.image} />
+          <button onClick={() => modalChange(card.date)}>Open</button>
+          <Contents
+            open={modal}
+            close={modalChange}
+            image={card.image}
+            date={card.date}
+            content={card.content}
+          />
+        </div>
       ))}
     </div>
   );
