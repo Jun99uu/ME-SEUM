@@ -57,7 +57,7 @@ function Fun() {
   return (
     <div>
       {banner.map((banner) => (
-        <div>
+        <div key={banner.date}>
           <img src={banner.image} />
           <button onClick={() => modalChange(banner.date)}>열기</button>
           <Banners

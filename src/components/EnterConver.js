@@ -106,6 +106,10 @@ function EnterConver({ setUserName, setUserMbti }) {
     }
   }, [mbti]);
 
+  const submitBlock = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <img src={helper === 5 ? wink : moving} alt="집사" />
@@ -113,7 +117,7 @@ function EnterConver({ setUserName, setUserMbti }) {
         {comment}
 
         {helper === 2 ? (
-          <form>
+          <form onSubmit={submitBlock}>
             <input
               type="radio"
               id="yes"
@@ -133,7 +137,7 @@ function EnterConver({ setUserName, setUserMbti }) {
           </form>
         ) : null}
         {helper === 3 ? (
-          <form>
+          <form onSubmit={submitBlock}>
             <input
               type="text"
               placeholder="이름을 작성해주세요."

@@ -70,7 +70,7 @@ function Home({ userName, userMbti }) {
   return (
     <div>
       {card.map((card) => (
-        <div>
+        <div key={card.date}>
           <img src={card.image} />
           <button onClick={() => modalChange(card.date)}>Open</button>
           <Contents
