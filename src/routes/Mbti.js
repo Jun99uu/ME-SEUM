@@ -1,28 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ProgressBar from "../components/ProgressBar";
 
 const MBTIs = {
-  INFP : 0,
-  ENFP : 0,
-  INFJ : 0,
-  ENFJ : 0,
-  INTJ : 0,
-  ENTJ : 0,
-  INTP : 0,
-  ENTP : 0,
-  ISFP : 0,
-  ESFP : 0,
-  ISTP : 0,
-  ESTP : 0,
-  ISFJ : 0,
-  ESFJ : 0,
-  ISTJ : 0,
-  ESTJ : 0
-}
+  INFP: 60,
+  ENFP: 80,
+  INFJ: 40,
+  ENFJ: 60,
+  INTJ: 20,
+  ENTJ: 20,
+  INTP: 100,
+  ENTP: 80,
+  ISFP: 60,
+  ESFP: 40,
+  ISTP: 100,
+  ESTP: 60,
+  ISFJ: 60,
+  ESFJ: 60,
+  ISTJ: 60,
+  ESTJ: 40,
+};
 
 function Mbti({ userName, userMbti }) {
   const [name, setName] = useState(userName);
   const [mbti, setMbti] = useState(userMbti);
+  const [percent, setPercent] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +37,9 @@ function Mbti({ userName, userMbti }) {
     }
   }, []);
 
+  useEffect(() => {
+    setPercent(MBTIs[mbti]);
+  }, [mbti]);
 
   return (
     <div>
@@ -47,7 +52,9 @@ function Mbti({ userName, userMbti }) {
       ) : (
         <div>
           <h2>{name}님과 저희 미술관은…</h2>
-          <div className="progress"></div>
+          <ProgressBar width={60} color={"#EFEFEF"}>
+            <ProgressBar width={percent} color={"#FFC300"} moving={1} inner />
+          </ProgressBar>
         </div>
       )}
     </div>
