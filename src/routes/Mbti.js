@@ -3,28 +3,29 @@ import { useNavigate } from "react-router-dom";
 import ProgressBar from "../components/ProgressBar";
 
 const MBTIs = {
-  INFP: 60,
-  ENFP: 80,
-  INFJ: 40,
-  ENFJ: 60,
-  INTJ: 20,
-  ENTJ: 20,
-  INTP: 100,
-  ENTP: 80,
-  ISFP: 60,
-  ESFP: 40,
-  ISTP: 100,
-  ESTP: 60,
-  ISFJ: 60,
-  ESFJ: 60,
-  ISTJ: 60,
-  ESTJ: 40,
+  INFP: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ENFP: [80, "완전 찰떡궁합!🤩"],
+  INFJ: [40, "이정도면 짱친이지~🤗"],
+  ENFJ: [60, "저희… 꽤 잘맞을지도…?😚"],
+  INTJ: [20, "조금… 안맞아도 좋은 친구가 될 수 있다구요!🤪"],
+  ENTJ: [20, "조금… 안맞아도 좋은 친구가 될 수 있다구요!🤪"],
+  INTP: [100, "이게 사랑인가요…?😍"],
+  ENTP: [80, "완전 찰떡궁합!🤩"],
+  ISFP: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ESFP: [40, "이정도면 짱친이지~🤗"],
+  ISTP: [100, "이게 사랑인가요…?😍"],
+  ESTP: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ISFJ: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ESFJ: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ISTJ: [60, "저희… 꽤 잘맞을지도…?😚"],
+  ESTJ: [40, "이정도면 짱친이지~🤗"],
 };
 
 function Mbti({ userName, userMbti }) {
   const [name, setName] = useState(userName);
   const [mbti, setMbti] = useState(userMbti);
   const [percent, setPercent] = useState(0);
+  const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +39,10 @@ function Mbti({ userName, userMbti }) {
   }, []);
 
   useEffect(() => {
-    setPercent(MBTIs[mbti]);
+    if (mbti !== "") {
+      setPercent(MBTIs[mbti][0]);
+      setComment(MBTIs[mbti][1]);
+    }
   }, [mbti]);
 
   return (
@@ -55,6 +59,9 @@ function Mbti({ userName, userMbti }) {
           <ProgressBar width={60} color={"#EFEFEF"}>
             <ProgressBar width={percent} color={"#FFC300"} moving={1} inner />
           </ProgressBar>
+          <h2>
+            {percent}% : {comment}
+          </h2>
         </div>
       )}
     </div>
