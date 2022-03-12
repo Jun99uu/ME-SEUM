@@ -39,7 +39,8 @@ function Mbti({ userName, userMbti }) {
   }, []);
 
   useEffect(() => {
-    if (mbti !== "") {
+    if (mbti !== "" && mbti !== null) {
+      console.log(mbti);
       setPercent(MBTIs[mbti][0]);
       setComment(MBTIs[mbti][1]);
     }
